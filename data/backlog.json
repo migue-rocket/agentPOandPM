@@ -1,0 +1,385 @@
+{
+  "user_stories": [
+    {
+      "id": "HU1",
+      "title": "Registro de usuario",
+      "gherkin": "Como usuario quiero registrarme con mi correo y contraseña para acceder al sistema",
+      "acceptance_criteria": [
+        "El usuario puede registrarse con un correo electrónico válido y una contraseña segura",
+        "Se envía un correo de confirmación al usuario después del registro",
+        "El sistema rechaza correos electrónicos inválidos o duplicados"
+      ],
+      "test_cases": [
+        {
+          "id": "HU1-TC1",
+          "title": "Validar registro exitoso con datos válidos",
+          "description": "Verificar que un usuario puede registrarse con correo y contraseña válidos",
+          "preconditions": "Sistema disponible, no hay usuario registrado con el email de prueba",
+          "steps": [
+            "Abrir página de registro",
+            "Ingresar email válido: test@example.com",
+            "Ingresar contraseña válida: Test123!",
+            "Hacer clic en botón Registrar"
+          ],
+          "expected_result": "Usuario registrado exitosamente, se envía email de confirmación, se redirige a página de inicio",
+          "test_type": "functional"
+        },
+        {
+          "id": "HU1-TC2",
+          "title": "Validar error con email inválido",
+          "description": "Verificar que el sistema rechaza emails con formato incorrecto",
+          "preconditions": "Sistema disponible",
+          "steps": [
+            "Abrir página de registro",
+            "Ingresar email inválido: test@invalid",
+            "Ingresar contraseña válida: Test123!",
+            "Hacer clic en botón Registrar"
+          ],
+          "expected_result": "Se muestra mensaje de error 'Email inválido', no se crea usuario",
+          "test_type": "functional"
+        },
+        {
+          "id": "HU1-TC3",
+          "title": "Validar error con email duplicado",
+          "description": "Verificar que el sistema rechaza emails ya registrados",
+          "preconditions": "Usuario registrado con email test@duplicate.com",
+          "steps": [
+            "Abrir página de registro",
+            "Ingresar email duplicado: test@duplicate.com",
+            "Ingresar contraseña válida: Test123!",
+            "Hacer clic en botón Registrar"
+          ],
+          "expected_result": "Se muestra mensaje de error 'Email ya registrado', no se crea usuario",
+          "test_type": "functional"
+        }
+      ],
+      "story_points": 5,
+      "priority": "Alta",
+      "dependencies": [],
+      "subtasks": [
+        {
+          "id": "HU1-ST1",
+          "title": "Análisis técnico",
+          "description": "Revisar requisitos del sistema de registro y enviar correo de confirmación",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU1-ST2",
+          "title": "Diseño de interfaz",
+          "description": "Crear la vista de formulario de registro",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU1-ST3",
+          "title": "Backend/API",
+          "description": "Implementar lógica de creación de usuario y envío de correo de confirmación",
+          "estimated_hours": 5.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU1-ST4",
+          "title": "Frontend",
+          "description": "Conectar frontend con API para el registro",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU1-ST5",
+          "title": "Pruebas unitarias",
+          "description": "Escribir pruebas unitarias para el registro de usuario",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU1-ST6",
+          "title": "Pruebas de integración",
+          "description": "Validar integración entre frontend y backend en el proceso de registro",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU1-ST7",
+          "title": "Documentación",
+          "description": "Crear documentación de usuario para el proceso de registro",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        }
+      ],
+      "sprint_assigned": 1,
+      "status": "Backlog",
+      "tags": [
+        "backend",
+        "frontend",
+        "auth",
+        "email"
+      ]
+    },
+    {
+      "id": "HU2",
+      "title": "Recuperación de contraseña",
+      "gherkin": "Como usuario quiero recuperar mi contraseña para acceder al sistema si la olvido",
+      "acceptance_criteria": [
+        "El usuario puede solicitar la recuperación de contraseña mediante su correo electrónico",
+        "Se envía un correo al usuario con un enlace para restablecer su contraseña",
+        "El enlace de recuperación es válido por un tiempo limitado"
+      ],
+      "test_cases": [
+        {
+          "id": "HU2-TC1",
+          "title": "Validar solicitud de recuperación de contraseña",
+          "description": "Verificar que el usuario puede solicitar recuperar su contraseña con un email registrado",
+          "preconditions": "Usuario registrado con email test@example.com",
+          "steps": [
+            "Abrir página de recuperación de contraseña",
+            "Ingresar email registrado: test@example.com",
+            "Hacer clic en botón Recuperar contraseña"
+          ],
+          "expected_result": "Se envía email con enlace de recuperación de contraseña al usuario",
+          "test_type": "functional"
+        },
+        {
+          "id": "HU2-TC2",
+          "title": "Validar error con email no registrado",
+          "description": "Verificar que el sistema rechaza solicitudes de recuperación de contraseña con emails no registrados",
+          "preconditions": "Sistema disponible",
+          "steps": [
+            "Abrir página de recuperación de contraseña",
+            "Ingresar email no registrado: invalid@example.com",
+            "Hacer clic en botón Recuperar contraseña"
+          ],
+          "expected_result": "Se muestra mensaje de error 'Email no registrado', no se envía email",
+          "test_type": "functional"
+        },
+        {
+          "id": "HU2-TC3",
+          "title": "Validar enlace de recuperación expirado",
+          "description": "Verificar que el sistema rechaza enlaces de recuperación de contraseña expirados",
+          "preconditions": "Enlace de recuperación expirado generado previamente",
+          "steps": [
+            "Abrir enlace de recuperación expirado",
+            "Intentar restablecer contraseña"
+          ],
+          "expected_result": "Se muestra mensaje de error 'Enlace expirado', no se puede restablecer la contraseña",
+          "test_type": "security"
+        }
+      ],
+      "story_points": 5,
+      "priority": "Alta",
+      "dependencies": [
+        "HU1"
+      ],
+      "subtasks": [
+        {
+          "id": "HU2-ST1",
+          "title": "Análisis técnico",
+          "description": "Definir flujo y lógica de recuperación de contraseña",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU2-ST2",
+          "title": "Diseño de interfaz",
+          "description": "Crear vista de formulario de recuperación de contraseña",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU2-ST3",
+          "title": "Backend/API",
+          "description": "Implementar lógica de generación y verificación de enlaces de recuperación",
+          "estimated_hours": 5.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU2-ST4",
+          "title": "Frontend",
+          "description": "Conectar frontend con API para recuperación de contraseña",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU2-ST5",
+          "title": "Pruebas unitarias",
+          "description": "Escribir pruebas unitarias para recuperación de contraseña",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU2-ST6",
+          "title": "Pruebas de integración",
+          "description": "Validar integración entre frontend y backend en el proceso de recuperación",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU2-ST7",
+          "title": "Documentación",
+          "description": "Crear documentación de usuario para el proceso de recuperación de contraseña",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        }
+      ],
+      "sprint_assigned": 1,
+      "status": "Backlog",
+      "tags": [
+        "backend",
+        "frontend",
+        "auth",
+        "security",
+        "email"
+      ]
+    },
+    {
+      "id": "HU3",
+      "title": "Roles de usuario",
+      "gherkin": "Como administrador quiero asignar roles a los usuarios para gestionar sus permisos en el sistema",
+      "acceptance_criteria": [
+        "El administrador puede asignar roles de usuario desde una interfaz administrativa",
+        "Los usuarios con rol de administrador tienen acceso a funcionalidades de gestión",
+        "Los usuarios con rol estándar tienen acceso limitado a funcionalidades"
+      ],
+      "test_cases": [
+        {
+          "id": "HU3-TC1",
+          "title": "Validar asignación de rol de administrador",
+          "description": "Verificar que un usuario puede ser asignado como administrador",
+          "preconditions": "Usuario registrado como estándar",
+          "steps": [
+            "Iniciar sesión como administrador",
+            "Acceder a la interfaz de gestión de roles",
+            "Seleccionar usuario estándar: user@example.com",
+            "Asignar rol de administrador",
+            "Guardar cambios"
+          ],
+          "expected_result": "Usuario asignado como administrador, se muestra en la lista de administradores",
+          "test_type": "functional"
+        },
+        {
+          "id": "HU3-TC2",
+          "title": "Validar acceso restringido para rol estándar",
+          "description": "Verificar que los usuarios estándar no pueden acceder a funcionalidades de gestión",
+          "preconditions": "Usuario registrado con rol estándar",
+          "steps": [
+            "Iniciar sesión como usuario estándar",
+            "Intentar acceder a la interfaz de gestión de roles"
+          ],
+          "expected_result": "Acceso denegado, se muestra mensaje de 'Permiso insuficiente'",
+          "test_type": "security"
+        },
+        {
+          "id": "HU3-TC3",
+          "title": "Validar lista de roles disponible para administrador",
+          "description": "Verificar que el administrador puede ver y asignar todos los roles disponibles",
+          "preconditions": "Usuario registrado con rol administrador",
+          "steps": [
+            "Iniciar sesión como administrador",
+            "Acceder a la interfaz de gestión de roles"
+          ],
+          "expected_result": "Se muestra lista de roles disponibles: estándar, administrador",
+          "test_type": "ui"
+        }
+      ],
+      "story_points": 8,
+      "priority": "Media",
+      "dependencies": [
+        "HU1"
+      ],
+      "subtasks": [
+        {
+          "id": "HU3-ST1",
+          "title": "Análisis técnico",
+          "description": "Definir estructura y lógica de roles de usuario",
+          "estimated_hours": 4.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU3-ST2",
+          "title": "Diseño de interfaz",
+          "description": "Crear vista administrativa para asignación de roles",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU3-ST3",
+          "title": "Backend/API",
+          "description": "Implementar lógica de asignación y verificación de roles",
+          "estimated_hours": 6.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU3-ST4",
+          "title": "Frontend",
+          "description": "Conectar frontend con API para gestión de roles",
+          "estimated_hours": 4.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU3-ST5",
+          "title": "Pruebas unitarias",
+          "description": "Escribir pruebas unitarias para asignación de roles",
+          "estimated_hours": 3.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU3-ST6",
+          "title": "Pruebas de integración",
+          "description": "Validar integración entre frontend y backend en gestión de roles",
+          "estimated_hours": 4.0,
+          "status": "Pendiente"
+        },
+        {
+          "id": "HU3-ST7",
+          "title": "Documentación",
+          "description": "Crear documentación de usuario para gestión de roles",
+          "estimated_hours": 2.0,
+          "status": "Pendiente"
+        }
+      ],
+      "sprint_assigned": 2,
+      "status": "Backlog",
+      "tags": [
+        "backend",
+        "frontend",
+        "auth",
+        "roles",
+        "security"
+      ]
+    }
+  ],
+  "sprints": [
+    {
+      "number": 1,
+      "name": "Sprint 1",
+      "capacity": 10,
+      "user_stories": [
+        "HU1",
+        "HU2"
+      ],
+      "total_points": 10,
+      "completed_points": 0,
+      "status": "Planificado",
+      "start_date": null,
+      "end_date": null
+    },
+    {
+      "number": 2,
+      "name": "Sprint 2",
+      "capacity": 10,
+      "user_stories": [
+        "HU3"
+      ],
+      "total_points": 8,
+      "completed_points": 0,
+      "status": "Planificado",
+      "start_date": null,
+      "end_date": null
+    }
+  ],
+  "team_capacity": 10,
+  "velocity_history": [],
+  "current_velocity": null,
+  "created_at": "2025-10-30T12:15:20.252059",
+  "updated_at": "2025-10-30T12:15:20.252138"
+}
