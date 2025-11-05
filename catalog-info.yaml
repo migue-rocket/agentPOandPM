@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: demo-service
+  description: Servicio demo para PoC
+  annotations:
+    github.com/project-slug: migue-rocket/agentPOandPM
+spec:
+  type: service
+  lifecycle: experimental
+  owner: team-plataforma
